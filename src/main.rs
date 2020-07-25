@@ -7,12 +7,12 @@ struct Point {
 }
 
 fn main() {
-    let polynomial: Vec<u16> = construct_polynomial();
-    // let k = 3;
-    // let n = 6;
+    let k = 3;
+    let n = 6;
+    let polynomial: Vec<u16> = construct_polynomial(&k);
 
     let mut points: Vec<Point> = Vec::new();
-    for x in 0..6 {
+    for x in 0..n {
         let result = construct_points(&polynomial, x as f32);
         let to_push = Point {
             x: x as f32, 
@@ -27,15 +27,13 @@ fn main() {
 
 }
 
-fn construct_polynomial() -> Vec<u16>{
+fn construct_polynomial(k: &u64) -> Vec<u16>{
     let mut rng = rand::thread_rng();
-    let a0: u16 = rng.gen();
-    let a1: u16 = rng.gen();
-    let a2: u16 = rng.gen();
-
-    vec!(a0, a1, a2)
-
-    
+    let mut polynomial = Vec::new();
+    for x in 0..*k {
+        polynomial.push(rng.gen());
+    }
+    polynomial 
 }
 
 fn construct_points(polynomial: &Vec<u16>, x: f32) -> f32 {
