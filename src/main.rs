@@ -10,6 +10,7 @@ fn main() {
     let k = 3;
     let n = 6;
     let polynomial: Vec<u16> = construct_polynomial(&k);
+    println!("{:?}", polynomial);
 
     let mut points: Vec<Point> = Vec::new();
     for x in 0..n {
@@ -30,15 +31,22 @@ fn main() {
 fn construct_polynomial(k: &u64) -> Vec<u16>{
     let mut rng = rand::thread_rng();
     let mut polynomial = Vec::new();
-    for x in 0..*k {
+    for _x in 0..*k {
         polynomial.push(rng.gen());
     }
     polynomial 
 }
 
 fn construct_points(polynomial: &Vec<u16>, x: f32) -> f32 {
-    //TODO build this better without hardcoding using the threshold k and number n
-    polynomial[0] as f32 + (polynomial[1] as f32 * x ) + (polynomial[2] as f32 * (x.powi(2)))
+    let polynomial_size = polynomial.len();
+    let mut total = 0.0;
+    for i in 0..polynomial_size {
+        total += polynomial[i] as f32 * x.powi(i as i32);
+    }
+
+    total
+
+    
 }
 
 fn reconstruct_proofs(points: &Vec<Point>) -> f32 {
